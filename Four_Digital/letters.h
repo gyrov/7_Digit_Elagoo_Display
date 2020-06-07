@@ -25,7 +25,6 @@ class Display{
   private:
     int _digpins[4];
     int _segpins[8];
-    
 };
 
 #endif
