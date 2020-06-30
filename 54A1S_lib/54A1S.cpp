@@ -1,5 +1,5 @@
 #include <Arduino.h>
-#include "letters.h"
+#include "54A1S.h"
 
 
 static void writechar(int segpins[8], int digit[8]) {

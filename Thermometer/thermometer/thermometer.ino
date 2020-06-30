@@ -19,5 +19,5 @@ void loop() {
   Serial.print("V\n");
   Serial.print(R2);
   Serial.print("Ohms\n");
-  delay(500);
+  delay(10000);
 }
