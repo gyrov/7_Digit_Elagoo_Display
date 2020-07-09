@@ -49,7 +49,7 @@ class disp{
   public:
     disp(int segpins[8], int digpins[4]);
     void setdigit(int dig, int num);
-    void disp_num(long num);
+    void disp_num(char[] input);
     int _segpins[8];
     int _digpins[4];
 };

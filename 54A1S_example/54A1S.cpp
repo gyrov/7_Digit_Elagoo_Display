@@ -12,8 +12,6 @@ struct d_chars dc = {
   {HIGH, HIGH, HIGH, LOW, LOW, LOW, LOW, LOW},
   {HIGH, HIGH, HIGH, HIGH, HIGH, HIGH, HIGH, LOW},
   {HIGH, HIGH, HIGH, LOW, LOW, HIGH, HIGH, LOW},
-  {}
-
 };
 
 static void writechar(int segpins[8], int digit[8]) {
@@ -22,35 +20,35 @@ static void writechar(int segpins[8], int digit[8]) {
   }
 }
 
-static void selectchar(String num, int segpins[8]) {
-  if (num == 0) {
+static void selectchar(char ichar, int segpins[8]) {
+  if (ichar == 48) {
     writechar(segpins, dc.d_0);
   }
-  else if (num == 1) {
+  else if (ichar == 49) {
     writechar(segpins, dc.d_1);
   }
-  else if (num == 2) {
+  else if (ichar == 50) {
     writechar(segpins, dc.d_2);
   }
-  else if (num == 3) {
+  else if (ichar == 51) {
     writechar(segpins, dc.d_3);
   }
-  else if (num == 4) {
+  else if (ichar == 52) {
     writechar(segpins, dc.d_4);
   }
-  else if (num == 5) {
+  else if (ichar == 53) {
     writechar(segpins, dc.d_5);
   }
-  else if (num == 6) {
+  else if (ichar == 54) {
     writechar(segpins, dc.d_6);
   }
-  else if (num == 7) {
+  else if (ichar == 55) {
     writechar(segpins, dc.d_7);
   }
-  else if (num == 8) {
+  else if (ichar == 56) {
     writechar(segpins, dc.d_8);
   }
-  else if (num == 9) {
+  else if (ichar == 57) {
     writechar(segpins, dc.d_9);
   }
   else{
@@ -69,7 +67,7 @@ disp::disp(int segpins[8], int digpins[4]) {
   }
 }
 
-void disp::setdigit(int dig, int num) {
+void disp::setdigit(int dig, char num) {
   for (int c = 0; c < 4; c++) {
     if (c == dig - 1)
     {
@@ -80,32 +78,20 @@ void disp::setdigit(int dig, int num) {
       digitalWrite(_digpins[c], HIGH);
     }
   }
-  selectdigit(num, _segpins);
+  selectchar(num, _segpins);
   delay(5);
 }
 
-void disp::disp_num(char input) {
-  String number = String(num);
-  int L = number.length();
-
-  if (L == 1) {
-    number = String("000" + number);
+void disp::disp_num(char[] input) {
+  int L = sizeof(input)/sizeof(input[0]);
+  char number[4] = "0000";
+  for(int j=4-L; j<4; j++){
+    number[j] = input[j];
   }
-  else if (L == 2) {
-    number = String("00" + number);
-  }
-  else if (L == 3) {
-    number = String("0" + number);
-  }
-  else {}
   for(int c=0;c<20;c++){
     for (unsigned int i = 0; i < 4; i++) {
-      String strindx = String(number.charAt(i));
-      int strint = strindx.toInt();
-      Serial.println(strint);
       digitalWrite(_digpins[i], LOW);
-      selectdigit(strint, _segpins);
-      delay(1);
+      selectchar(number, _segpins);
       digitalWrite(_digpins[i], HIGH);
     }
   }
